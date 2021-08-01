@@ -5,4 +5,11 @@
   @!component('snowdog/bacon', {
     img: '/images/bacon.jpg'
   })
+<script>
+  const element = document.getElementsByTagName("button");
+  element[0].addEventListener('click', function() {
+    let bacon = document.querySelector('img[alt="Beautiful slices of fried bacon"]');
+    document.getElementsByTagName('section')[1].appendChild(bacon.cloneNode(true));
+  });
+</script>
 @end

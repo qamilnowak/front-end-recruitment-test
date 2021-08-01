@@ -21,6 +21,7 @@ body:before {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 a {
@@ -31,7 +32,7 @@ a {
 main {
   max-width: 620px;
   margin: auto;
-  height: 100vh;
+  height: 100%;
   padding: 0 30px;
   align-items: center;
   display: flex;
@@ -77,4 +78,10 @@ main li:before {
 main code {
   font-size: 16px;
   background: #e6e2ff;
+}
+
+button[type="button"] {
+  position: fixed;
+  top: 25%
+
 }
