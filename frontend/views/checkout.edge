@@ -1,0 +1,25 @@
+@layout('layouts/main')
+@set('title', 'Checkout')
+
+@section('body')
+<div>
+  <div>
+
+  </div>
+  <div>
+    <h3>YOUR ORDER</h3>
+    <div>
+      @each(item in state.cart.items)
+      {{ item.name }} {{ item.price }}
+      @end
+    </div>
+    <div>
+      <p>Total purchases {{ state.cart.totals.subTotal }}</p>
+      <p>Estimated tax {{ state.cart.totals.tax }}</p>
+    </div>
+    <div>
+      Total{{ state.cart.totals.grandTotal }}
+    </div>
+  </div>
+</div>
+@end
