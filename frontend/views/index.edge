@@ -2,6 +2,9 @@
 @set('title', 'Home page')
 
 @section('body')
+@if(flashMessages.has('message'))
+<div id="flashMessage">{{ flashMessages.get('message') }}</div>
+@endif
   @!component('components/welcome', {
     source: 'resources/views/index.edge'
   })

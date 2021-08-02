@@ -1,51 +1,141 @@
 @layout('layouts/main')
 @set('title', 'Checkout')
 @section('body')
-<div>
+  @each(error in flashMessages.all())
+<div id="errorMessage">{{ error }}</div>
+@end
+<div class="main">
   <div class="form">
-    <form action="/order" method="post">
-    <ol>
-      <li>Personal information</li>
-      <label for="firstName">First name</label>
-      <input type="text" id="firstName" name="firstName" placeholder="Elon">
-      <li>Payments details</li>
-      <label for="creditCard">Credit Card Number</label>
-      <input type="tel" id="creditCard" name="creditCard" placeholder="0000 – 0000 – 0000 – 0000" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="8" >
-      <label for="creditCard">Security Code</label>
-      <input type="password" id="securityCode" name="securityCode" placeholder="***" inputmode="numeric" maxlength="3">
-      <div>
-      </div>
-      <button type="submit" class="complete-purchase">
-        <span class="mdi mdi-cart"></span>
-        Complete purchase
-      </button>
-    </ol>
+    <form onsubmit="return validateFrom(event);" action="/order" method="post" name="order">
+      <ol>
+        <li>Personal information</li>
+        <div class="form-row">
+          <div class="col">
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Elon">
+            <div id="firstNameError" class="error"></div>
+          </div>
+          <div class="col">
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Musk">
+            <div id="lastNameError" class="error"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-full">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="elon@spacex.com">
+            <div id="emailError" class="error"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="country">Country</label>
+            <select name="country" id="country">
+              <option value="us">United States</option>
+              <option value="pl">Poland</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="postalCode">Postal Code</label>
+            <input type="text" id="postalCode" name="postalCode" placeholder="10001" maxlength="5">
+            <div id="postalCodeError" class="error"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-full">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" placeholder="(212) 692-93-92" minlength="9" maxlength="9">
+            <div id="phoneError" class="error"></div>
+          </div>
+        </div>
+        <li>Payments details <span class="mdi mdi-lock lock"></span></li>
+        <div class="form-row">
+          <div class="col-full">
+            <label for="creditCard">Credit Card Number</label>
+            <input type="tel" id="creditCard" name="creditCard" placeholder="0000 – 0000 – 0000 – 0000"
+                   inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="16">
+            <div id="creditCardError" class="error"></div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <label for="CVV">Security Code</label>
+            <input type="password" id="CVV" name="CVV" placeholder="***" inputmode="numeric"
+                   maxlength="3">
+            <div id="CVVError" class="error"></div>
+          </div>
+          <div class="col">
+            <label for="expDate">Expiration date</label>
+            <input type="text" id="expDate" name="expDate" placeholder="MM / YY"
+                   maxlength="5">
+            <div id="expDateError" class="error"></div>
+          </div>
+        </div>
+        <div>
+          <div class="form-row">
+            <div class="col-full">
+              <button type="submit" class="complete-purchase">
+                <span class="mdi mdi-cart"></span>
+                Complete purchase
+              </button>
+            </div>
+          </div>
+        </div>
+      </ol>
     </form>
   </div>
   <div class="order">
-    <h3>YOUR ORDER</h3>
-    <div class="items">
-      @each(item in state.cart.items)
-      <div class="item">
-      <p>{{ item.name }}</p>
-      <p class="price">{{ item.price }}</p>
+    <div class="order-border">
+      <p class="order-header">YOUR ORDER</p>
+      <div class="items">
+        @each(item in state.cart.items)
+        <div>
+          <p>{{ item.name }}</p>
+          <p class="price">{{ item.price }}</p>
+        </div>
+        @end
       </div>
-      @end
-    </div>
-    <div class="summary">
-      <div>
-      <p>Total purchases</p>
-      <p class="price">{{ state.cart.totals.subTotal }}</p>
+      <div class="summary">
+        <div>
+          <p>Total purchases</p>
+          <p class="price">{{ state.cart.totals.subTotal }}</p>
+        </div>
+        <div>
+          <p>Estimated tax</p>
+          <p class="price"> {{ state.cart.totals.tax }}</p>
+        </div>
       </div>
-      <div>
-      <p>Estimated tax</p>
-      <p class="price"> {{ state.cart.totals.tax }}</p>
+      <div class="total">
+        <p>Total</p>
+        <p class="price sum">{{ state.cart.totals.grandTotal }}</p>
       </div>
-    </div>
-    <div>
-      <p>Total</p>
-      <p class="price total">{{ state.cart.totals.grandTotal }}</p>
     </div>
   </div>
 </div>
+<script>
+  function setErrorMessage(field, msg) {
+    document.getElementById(field + "Error").innerHTML = msg
+  }
+
+  function validateFrom(event) {
+    event.preventDefault();
+    let fieldCounter = 0
+    let formFields = ['firstName', 'lastName', 'email', 'postalCode', 'phone' , 'creditCard', 'CVV', 'expDate']
+    for (const field of formFields) {
+      if (document.forms["order"][field].value === "") {
+        setErrorMessage(field, 'Field required')
+      } else {
+        fieldCounter += 1
+        setErrorMessage(field, '')
+      }
+    }
+    if (fieldCounter == formFields.length) {
+      document.forms['order'].submit()
+      return true
+    } else {
+      return false
+    }
+  }
+</script>
 @end

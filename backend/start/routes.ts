@@ -47,8 +47,7 @@ Route.get('/checkout', async ({ view }) => {
 
   return view.render('checkout', state)
 })
-
-Route.post('/order', async ({ request, response }) => {
+Route.post('/order', async ({ request, response , session}) => {
   const orderSchema = schema.create({
     firstName: schema.string(),
     lastName: schema.string(),
@@ -75,10 +74,15 @@ Route.post('/order', async ({ request, response }) => {
 
   try {
     await request.validate({ schema: orderSchema })
-    response.send({
+    session.flash({
       message: 'Order successfully placed.',
     })
+    return response.redirect('/')
   } catch(error) {
-    response.badRequest(error.messages)
+    for (const key in error.messages) {
+      error.messages[key] = (error.messages[key]).toString().replace('regex', key + ' field')
+    }
+    session.flash(error.messages)
+    return response.redirect('back')
   }
 })
