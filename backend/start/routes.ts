@@ -30,6 +30,7 @@ Route.get('/bacon', async ({ view }) => {
 })
 
 Route.get('/checkout', async ({ view }) => {
+
   const state = {
     cart: {
       items: [

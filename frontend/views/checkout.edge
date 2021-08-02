@@ -1,24 +1,50 @@
 @layout('layouts/main')
 @set('title', 'Checkout')
-
 @section('body')
 <div>
-  <div>
-
+  <div class="form">
+    <form action="/order" method="post">
+    <ol>
+      <li>Personal information</li>
+      <label for="firstName">First name</label>
+      <input type="text" id="firstName" name="firstName" placeholder="Elon">
+      <li>Payments details</li>
+      <label for="creditCard">Credit Card Number</label>
+      <input type="tel" id="creditCard" name="creditCard" placeholder="0000 – 0000 – 0000 – 0000" inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="8" >
+      <label for="creditCard">Security Code</label>
+      <input type="password" id="securityCode" name="securityCode" placeholder="***" inputmode="numeric" maxlength="3">
+      <div>
+      </div>
+      <button type="submit" class="complete-purchase">
+        <span class="mdi mdi-cart"></span>
+        Complete purchase
+      </button>
+    </ol>
+    </form>
   </div>
-  <div>
+  <div class="order">
     <h3>YOUR ORDER</h3>
-    <div>
+    <div class="items">
       @each(item in state.cart.items)
-      {{ item.name }} {{ item.price }}
+      <div class="item">
+      <p>{{ item.name }}</p>
+      <p class="price">{{ item.price }}</p>
+      </div>
       @end
     </div>
-    <div>
-      <p>Total purchases {{ state.cart.totals.subTotal }}</p>
-      <p>Estimated tax {{ state.cart.totals.tax }}</p>
+    <div class="summary">
+      <div>
+      <p>Total purchases</p>
+      <p class="price">{{ state.cart.totals.subTotal }}</p>
+      </div>
+      <div>
+      <p>Estimated tax</p>
+      <p class="price"> {{ state.cart.totals.tax }}</p>
+      </div>
     </div>
     <div>
-      Total{{ state.cart.totals.grandTotal }}
+      <p>Total</p>
+      <p class="price total">{{ state.cart.totals.grandTotal }}</p>
     </div>
   </div>
 </div>

@@ -1,0 +1,109 @@
+p {
+  display: inline-flex
+}
+
+p.price {
+  float: right;
+  margin-right: 15px
+}
+
+.complete-purchase, .order,input {
+  border-radius: 5px;
+  border-color: transparent;
+  box-shadow: 0 2px rgba(0,0,0,.1)
+}
+
+.order {
+  background-color: #fff
+}
+
+.price {
+  text-align: right
+}
+.total{
+  text-align: right;
+  font-weight: bold;
+
+}
+
+.price:before {
+  content: '$ '
+}
+
+.items {
+  display: flex
+}
+
+.items,.summary {
+  border-bottom: 2px dashed #dcdcdc
+}
+
+.form {
+  width: 70vw;
+  height: 100%
+}
+
+.form ol {
+  list-style: none;
+  counter-reset: item
+}
+
+.form li {
+  counter-increment: item;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #000
+}
+
+.form li:before {
+  margin-right: 10px;
+  content: counter(item);
+  background: #000;
+  border-radius: 100%;
+  color: #fff;
+  width: 1.2em;
+  text-align: center;
+  display: inline-block
+}
+
+input {
+  height: 3rem;
+  display: block;
+  padding: 18px 0 0 7px;
+  width: 100%
+}
+
+label {
+  font-size: 12px;
+  position: relative;
+  top: 22px;
+  left: 10px
+}
+.complete-purchase {
+  text-transform: uppercase;
+  cursor: pointer;
+  height: 50px;
+  border: none;
+  font-size: 14px;
+  font-weight: 800;
+  transition: all 0.2s linear;
+  background: #6bd400;
+  color: #ffffff;
+  width: 100%;
+}
+.complete-purchase:hover {
+  -webkit-transform: scale(1.02);
+  transform: scale(1.01);
+  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
+}
+#creditCard {
+  background-image: url('https://api.iconify.design/logos-visa.svg?height=10');
+  background-repeat: no-repeat;
+  background-position: 97.5% 50%;
+}
+#securityCode {
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.575), rgba(255, 255, 255, 0.541)), url("https://img.icons8.com/material-outlined/24/000000/help.png");
+  background-repeat: no-repeat;
+  background-position: 97.5% 50%;
+}
