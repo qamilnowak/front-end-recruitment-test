@@ -38,7 +38,7 @@
           </div>
           <div class="col">
             <label for="postalCode">Postal Code</label>
-            <input type="text" id="postalCode" name="postalCode" placeholder="10001" maxlength="5">
+            <input type="text" id="postalCode" name="postalCode" placeholder="10001" minlength="5" maxlength="5">
             <div id="postalCodeError" class="error"></div>
           </div>
         </div>
@@ -54,7 +54,7 @@
           <div class="col-full">
             <label for="creditCard">Credit Card Number</label>
             <input type="tel" id="creditCard" name="creditCard" placeholder="0000 – 0000 – 0000 – 0000"
-                   inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="16">
+                   inputmode="numeric" pattern="[0-9\s]{13,19}" maxlength="16"  minlength="16">
             <div id="creditCardError" class="error"></div>
           </div>
         </div>
@@ -62,13 +62,13 @@
           <div class="col">
             <label for="CVV">Security Code</label>
             <input type="password" id="CVV" name="CVV" placeholder="***" inputmode="numeric"
-                   maxlength="3">
+                   maxlength="3" minlength="3">
             <div id="CVVError" class="error"></div>
           </div>
           <div class="col">
             <label for="expDate">Expiration date</label>
             <input type="text" id="expDate" name="expDate" placeholder="MM / YY"
-                   maxlength="5">
+                   maxlength="5" minlength="5">
             <div id="expDateError" class="error"></div>
           </div>
         </div>
@@ -99,7 +99,7 @@
       <div class="summary">
         <div>
           <p>Total purchases</p>
-          <p class="price">{{ state.cart.totals.subTotal }}</p>
+          <p class="price">{{ Number(state.cart.totals.subTotal).toFixed(2) }}</p>
         </div>
         <div>
           <p>Estimated tax</p>
@@ -130,7 +130,22 @@
         setErrorMessage(field, '')
       }
     }
-    if (fieldCounter == formFields.length) {
+    let expDate = document.forms["order"]['expDate'].value.split('/')
+    if (expDate.length !== 2) {
+      fieldCounter -= 1
+      setErrorMessage('expDate', 'Acceptable format: 00/00')
+    }
+    if (expDate.length == 2) {
+      if (expDate[0].length !== 2 | expDate[1].length !== 2) {
+        fieldCounter -= 1
+        setErrorMessage('expDate', 'Acceptable format: 00/00')
+      }
+      if (Number(expDate[1]) < Number(new Date().getFullYear().toString().slice(-2))) {
+        fieldCounter -= 1
+        setErrorMessage('expDate', 'Expired card')
+      }
+    }
+    if (fieldCounter === formFields.length) {
       document.forms['order'].submit()
       return true
     } else {

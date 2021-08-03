@@ -1,24 +1,22 @@
 @keyframes greenfade {
-  from {
-    background: lightgreen;
-    color: green;
+  0% {
+    background: #90ee90;
+    color: green
   }
   to {
-    background: transparent;
+    background: 0 0
   }
 }
-
 @keyframes redfade {
-  from {
-    background: lightcoral;
-    color: red;
+  0% {
+    background: #f08080;
+    color: red
   }
   to {
-    background: transparent;
+    background: 0 0
   }
 }
-
-#flashMessage {
+#errorMessage, #flashMessage {
   font-size: 18px;
   color: green;
   animation-name: greenfade;
@@ -26,47 +24,35 @@
   position: fixed;
   top: 10%
 }
-
 #errorMessage {
-  font-size: 18px;
   color: red;
   animation-name: redfade;
-  animation-duration: 5s;
-  position: fixed;
-  top: 10%
+  animation-duration: 5s
 }
-
 .main {
-  display: flex;
+  display: flex
 }
-
 #nav {
   position: fixed;
   bottom: 45%
 }
-
 p {
   display: inline-flex;
   font-weight: 600
 }
-
 p .order {
   margin-bottom: 0
 }
-
 p.price {
   float: right
 }
-
 .complete-purchase, .order, input, select {
   border-radius: 5px;
   box-shadow: 0 2px rgba(0, 0, 0, .1)
 }
-
 .order, input, select {
   border-color: transparent
 }
-
 .order {
   padding: 5px;
   height: 45%;
@@ -76,75 +62,66 @@ p.price {
   background-color: #fff;
   font-size: 12px
 }
-
 .order-border {
   border: 2px dotted #dcdcdc;
   border-radius: 5px
 }
-
-.form li, .order-header {
+.form li {
+  color: #000
+}
+.order-header {
   margin-left: 15px;
   margin-top: 15px;
   margin-bottom: 0;
   color: #000;
   font-weight: 800
 }
-
 .price {
   text-align: right
 }
-
 .items, .summary, .total {
   margin-top: 15px;
   margin-left: 15px;
-  margin-right: 15px;
+  margin-right: 15px
 }
-
 .total {
+  margin-bottom: 25px;
+}
+.form li, .total {
   font-weight: 900
 }
-
 .price:before {
   content: '$\00a0'
 }
-
 .items, .summary {
   border-bottom: 2px dashed #dcdcdc
 }
-
 .form {
   width: 50vw;
   flex: 70%
 }
-
 .form-row {
   width: 100%;
   display: flex;
   justify-content: space-between
 }
-
 .col {
   width: 49%
 }
-
 .col-full {
   width: 100%
 }
-
 .form ol {
   list-style: none;
   counter-reset: item
 }
-
 .form li {
   counter-increment: item;
   margin-bottom: 5px;
   margin-top: 30px;
   margin-left: -20px;
-  text-transform: uppercase;
-  font-weight: 900
+  text-transform: uppercase
 }
-
 .form li:before {
   margin-right: 10px;
   content: counter(item);
@@ -155,7 +132,6 @@ p.price {
   text-align: center;
   display: inline-block
 }
-
 input, select {
   height: 3rem;
   display: block;
@@ -164,22 +140,18 @@ input, select {
   font-weight: 700;
   color: #333
 }
-
 input::placeholder {
   color: #9b9b9b
 }
-
 label, p.sum {
   font-weight: 700
 }
-
 label {
   font-size: 12px;
   position: relative;
   top: 22px;
   left: 10px
 }
-
 .complete-purchase {
   text-transform: uppercase;
   cursor: pointer;
@@ -193,68 +165,59 @@ label {
   width: 100%;
   margin-top: 25px
 }
-
 .complete-purchase:hover {
   -webkit-transform: scale(1.02);
   transform: scale(1.01);
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, .2)
 }
-
 #creditCard, #securityCode {
   background-repeat: no-repeat;
   background-position: 97.5% 50%
 }
-
 #creditCard {
   background-image: url(https://api.iconify.design/logos-visa.svg?height=10)
 }
-
 #securityCode {
   background-image: linear-gradient(to left, rgba(255, 255, 255, .575), rgba(255, 255, 255, .541)), url(https://img.icons8.com/material-outlined/24/000000/help.png)
 }
-
 .lock {
   margin-left: 5px;
   color: #484848
 }
-
 p.sum {
   color: #000;
   font-size: 20px
 }
-
-input:required:invalid, input:focus:valid {
-  border-color: red;
+input:focus:valid, input:required:invalid {
+  border-color: red
 }
-
 input:required:valid {
   background-position: right top;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat
 }
 
 .error {
   width: 100%;
   font-size: 12px;
-  color: red;
+  color: red
 }
 
 @media only screen and (max-width: 768px) {
   .main {
     display: flex;
-    flex-direction: column;
+    flex-direction: column
   }
 
   .order {
     width: 75vw;
     margin-left: 15px;
     margin-top: 25px;
-    order: 1;
+    order: 1
   }
 
   .form {
     width: 75vw;
     order: 2;
-    margin-bottom: 10px;
+    margin-bottom: 10px
   }
-
 }
